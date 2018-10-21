@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "3d98577e-4ae3-4966-8508-f9de74cdf47a",
+		"name": "CRUD PERSON",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUDO DOCUMENT",
+			"item": [
+				{
+					"name": "Create Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86e0f013-9a75-486a-98c4-41dfd1dd7fc9",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.globals.set(\"documentId\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\":\"passport\",\n\t\"document\":\"GF7739874-T\",\n\t\"expirationDate\": \"2019-10-14\",\n\t\"principal\": false\n}\n"
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/document",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"document"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86e0f013-9a75-486a-98c4-41dfd1dd7fc9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\":\"passport\",\n\t\"document\":\"GF7739874-T\",\n\t\"expirationDate\": \"2019-10-14\",\n\t\"principal\": true\n}\n"
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/document/{{documentId}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"document",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Document",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/document",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"document"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Document By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/document/{{documentId}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"document",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Document By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/document/{{documentId}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"document",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD CONTACT",
+			"item": [
+				{
+					"name": "Create Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c69c6b51-c20e-4d14-ba02-e9c136ddd86a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.globals.set(\"contactId\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/contact",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"contact"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD ADDRESS",
+			"item": [
+				{
+					"name": "Create Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bcf04a28-161b-4a91-a67f-a4aa245a1e82",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.globals.set(\"addressId\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}/address",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{person-port}}",
+							"path": [
+								"{{person-context}}",
+								"{{personId}}",
+								"address"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f5014e4-e692-46a9-9fd8-6b549b194123",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.globals.set(\"personId\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Ricrdo Maximino\",\n    \"firstname\": \"Gonçalves\",\n    \"lastname\": \"de Moraes\",\n    \"birthday\": \"1978-10-14\",\n    \"documents\": [\n    \t{\n    \t\t\"type\":\"passport\",\n    \t\t\"document\":\"GF7739874-T\",\n    \t\t\"expirationDate\": \"2019-10-14\"\n    \t}\n    \t],\n    \"contacts\": [\n    \t{\n    \t\t\"type\": \"movil\",\n    \t\t\"contact\": \"665895874\"\n    \t}\n    \t],\n    \"addresses\": [\n    \t{\n    \t\t\"country\": \"ESPAÑA\",\n    \t\t\"state\": \"Madrid\",\n    \t\t\"city\": \"Madrid\",\n    \t\t\"town\": \"Madrid\",\n    \t\t\"neighborhood\": \"centro\",\n    \t\t\"street\": \"Calle General Ricardos\",\n    \t\t\"number\": \"789\",\n    \t\t\"postCode\": \"28016\",\n    \t\t\"details\": \"Apt 12 5º B\"\n    \t}\n    \t],\n    \"systemActivationDateTime\": null\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{person-port}}",
+					"path": [
+						"{{person-context}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f5014e4-e692-46a9-9fd8-6b549b194123",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.globals.set(\"personId\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Ricrdo Maximino\",\n    \"firstname\": \"Gonçalves\",\n    \"lastname\": \"de Moraes\",\n    \"birthday\": \"1978-10-14\",\n    \"documents\": [\n    \t{\n    \t\t\"type\":\"passport\",\n    \t\t\"document\":\"GF7739874-T\",\n    \t\t\"expirationDate\": \"2019-10-14\"\n    \t}\n    \t],\n    \"contacts\": [\n    \t{\n    \t\t\"type\": \"movil\",\n    \t\t\"contact\": \"665895874\"\n    \t}\n    \t],\n    \"addresses\": [\n    \t{\n    \t\t\"country\": \"ESPAÑA\",\n    \t\t\"state\": \"Madrid\",\n    \t\t\"city\": \"Madrid\",\n    \t\t\"town\": \"Madrid\",\n    \t\t\"neighborhood\": \"centro\",\n    \t\t\"street\": \"Calle General Ricardos\",\n    \t\t\"number\": \"789\",\n    \t\t\"postCode\": \"28016\",\n    \t\t\"details\": \"Apt 12 5º B\"\n    \t}\n    \t],\n    \"systemActivationDateTime\": null\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{person-port}}",
+					"path": [
+						"{{person-context}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Person",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{person-port}}",
+					"path": [
+						"{{person-context}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Person By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{person-port}}",
+					"path": [
+						"{{person-context}}",
+						"{{personId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Person By ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{person-port}}/{{person-context}}/{{personId}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{person-port}}",
+					"path": [
+						"{{person-context}}",
+						"{{personId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
