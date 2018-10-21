@@ -1,4 +1,4 @@
-package brasajava.person.domain.event;
+package brasajava.person.message.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

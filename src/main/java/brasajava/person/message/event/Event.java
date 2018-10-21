@@ -1,4 +1,4 @@
-package brasajava.person.domain.event;
+package brasajava.person.message.event;
 
 public interface Event {
 	String getId();

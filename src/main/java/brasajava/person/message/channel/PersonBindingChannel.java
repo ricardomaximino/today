@@ -1,4 +1,4 @@
-package brasajava.person.channel;
+package brasajava.person.message.channel;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;

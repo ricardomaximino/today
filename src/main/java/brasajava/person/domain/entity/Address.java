@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import brasajava.person.domain.comun.Auditable;
 import brasajava.person.domain.comun.Identifiable;
-import brasajava.person.domain.event.AddressChangeAvailabilityEvent;
-import brasajava.person.domain.event.AddressChangeRegionEvent;
+import brasajava.person.message.event.AddressChangeAvailabilityEvent;
+import brasajava.person.message.event.AddressChangeRegionEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package brasajava.person.domain.event;
+package brasajava.person.message.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PersonUpdateEvent implements Event{
+public class ContactDeleteEvent implements Event{
 	private String id;
+	private String personId;
 
 	@Override
 	public String getId() {

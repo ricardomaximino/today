@@ -10,8 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import brasajava.person.domain.comun.Auditable;
 import brasajava.person.domain.comun.Identifiable;
-import brasajava.person.domain.event.PersonalDocumentCancelEvent;
-import brasajava.person.domain.event.PersonalDocumentExpiredEvent;
+import brasajava.person.message.event.PersonalDocumentCancelEvent;
+import brasajava.person.message.event.PersonalDocumentExpiredEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
