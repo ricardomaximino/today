@@ -5,9 +5,10 @@ import org.springframework.messaging.MessageChannel;
 
 public interface PersonBindingChannel {
 	
-	String PERSON_CREATED_EVENT = "";
-	String PERSON_UPDATED_EVENT = "";
-	String PERSON_ACTIVATED_EVENT = "";
+	String PERSON_CREATED_EVENT = "send-person-created-event";
+	String PERSON_UPDATED_EVENT = "send-person-updated-event";
+	String PERSON_ACTIVATED_EVENT = "send-person-actived-event";
+	String PERSON_DELETED_EVENT = "send-person-deleted-event";
 
 	@Output(PERSON_CREATED_EVENT)
 	MessageChannel sendCreatedEvent();
@@ -17,5 +18,8 @@ public interface PersonBindingChannel {
 	
 	@Output(PERSON_UPDATED_EVENT)
 	MessageChannel sendUpdatedEvent();
+	
+	@Output(PERSON_DELETED_EVENT)
+	MessageChannel sendDeletedEvent();
 
 }

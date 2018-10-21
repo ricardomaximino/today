@@ -1,6 +1,9 @@
 package brasajava.person.api.controller;
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,18 +30,27 @@ public class DocumentController {
 	}
 	
 	@PostMapping
-	public Mono<ResponseEntity<Person>> create(@PathVariable String id,@RequestBody PersonalDocument document){
+	public Mono<ResponseEntity<PersonalDocument>> create(@PathVariable String id,@RequestBody PersonalDocument document){
 		return service.findById(id)
 				.map(p -> p.addDocument(document, USER))
-				.flatMap(p -> service.update(p, USER))
+				.flatMap(t -> service.update(t.getT1(), USER).map(p -> t.getT2()))
 				.map(ResponseEntity::ok);
 	}
 	
 	@PutMapping("/{documentId}")
-	public Mono<ResponseEntity<Person>> update(@PathVariable String id, @PathVariable String documentId, @RequestBody PersonalDocument document){
+	public Mono<ResponseEntity<PersonalDocument>> update(@PathVariable String id, @PathVariable String documentId, @RequestBody PersonalDocument document){
 		return service.findById(id)
-					.flatMap(p -> service.update(p.updateDocument(documentId, document, USER), USER))
-					.map(ResponseEntity::ok);
+				.map(p -> p.updateDocument(documentId, document, USER))
+				.flatMap(t -> service.update(t.getT1(), USER).map(p -> t.getT2()))
+				.map(ResponseEntity::ok);
+	}
+	
+	@DeleteMapping("/{documentId}")
+	public Mono<ResponseEntity<Person>> delete(@PathVariable String id, @PathVariable String documentId){
+		return service.findById(id)
+				.map(p -> p.deleteDocumentById(documentId, USER))
+				.flatMap(p -> service.update(p, USER))
+				.map(ResponseEntity::ok);
 	}
 	
 	@GetMapping
@@ -51,8 +63,10 @@ public class DocumentController {
 	public Mono<ResponseEntity<PersonalDocument>> findById(@PathVariable String id, @PathVariable String documentId){
 		return service.findById(id)
 				.flatMap(p -> {
-					if(p.getDocumentById(documentId).isPresent()) {
-						return Mono.just(p.getDocumentById(documentId).get());
+					Optional<PersonalDocument> document = p.getDocumentById(documentId);
+					System.out.println("The document has been found: " + document.isPresent());
+					if(document.isPresent()) {
+						return Mono.just(document.get());
 					}else {
 						return Mono.empty();
 					}

@@ -17,15 +17,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import brasajava.person.domain.comun.Auditable;
 import brasajava.person.domain.comun.Identifiable;
+import brasajava.person.domain.event.AddressDeleteEvent;
+import brasajava.person.domain.event.ContactDeleteEvent;
 import brasajava.person.domain.event.PersonActivateEvent;
 import brasajava.person.domain.event.PersonCreateEvent;
 import brasajava.person.domain.event.PersonUpdateEvent;
+import brasajava.person.domain.event.PersonalDocumentDeleteEvent;
 import brasajava.person.domain.utils.AuditableUtils;
 import brasajava.person.domain.utils.IdentifiableUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 @Document
 @Data
@@ -125,23 +130,48 @@ public class Person extends AbstractAggregateRoot<Person> implements Cloneable, 
 	
 		
 	/* --------------------------- person events ---------------------------*/
-	protected Person createPerson() {
+	private Person createPerson() {
 		IdentifiableUtils.identify(Person.class, this);
 		registerEvent(new PersonCreateEvent(id));
 		return this;
 	}
 	
-	protected Person activatePerson() {
+	private Person activatePerson() {
 		registerEvent(new PersonActivateEvent(id));
 		return this;
 	}
 
-	protected Person updatePerson() {
+	private Person updatePerson() {
 		registerEvent(new PersonUpdateEvent(id));
 		return this;
 	}
+	
 	/* --------------------------- person events ---------------------------*/
 	
+	
+	/* ===================================== Delete Document =======================================*/
+	
+	private Person deleteDocument(String documentId) {
+		registerEvent(new PersonalDocumentDeleteEvent(documentId, id));
+		return this;
+	}
+	/* ===================================== Delete Document =======================================*/
+	
+	/* ===================================== Delete Contact =======================================*/
+	
+	private Person deleteContact(String contactId) {
+		registerEvent(new ContactDeleteEvent(contactId, id));
+		return this;
+	}
+	/* ===================================== Delete Contact =======================================*/
+	
+	/* ===================================== Delete Address =======================================*/
+	
+	private Person deleteAddress(String addressId) {
+		registerEvent(new AddressDeleteEvent(addressId, id));
+		return this;
+	}
+	/* ===================================== Delete Address =======================================*/
 	
 		
 	/* --------------------------- documents actions ---------------------------*/
@@ -177,31 +207,48 @@ public class Person extends AbstractAggregateRoot<Person> implements Cloneable, 
 			throw new RuntimeException(e.getCause());
 		}
 	}
-	public Person addDocument(PersonalDocument document, String user) {
+	public Tuple2<Person,PersonalDocument> addDocument(PersonalDocument document, String user) {
 		try {
 			PersonalDocument clonedDocument = document.clone();
 			IdentifiableUtils.identify(PersonalDocument.class, clonedDocument);
 			this.documents.add(clonedDocument);
 			documentsToUpdate.add(clonedDocument.getId());
-			return this.clone();
+			return Tuples.of(this.clone(), clonedDocument.clone());
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e.getCause());
 		}
 	}
 	
-	public Person updateDocument(String documentId, PersonalDocument document, String user) {
+	public Tuple2<Person, PersonalDocument> updateDocument(String documentId, PersonalDocument document, String user) {
 		try {
 			Optional<PersonalDocument> optionalDocument = documents.stream().filter(d -> d.getId().equals(documentId)).findFirst();
 			if(optionalDocument.isPresent()) {
 				optionalDocument.get().setPerson(this);
 				BeanUtils.copyProperties(document,optionalDocument.get(), "id","auditInfo");
 				documentsToUpdate.add(documentId);
-				return this.clone();				
+				return Tuples.of(this.clone(), optionalDocument.get().clone()) ;				
 			}else {
 				throw new RuntimeException("Document not found");
 			}
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e.getCause());
+		}
+	}
+	
+	public Person deleteDocumentById(String documentId, String user){
+		Optional<PersonalDocument> optionalDocument = documents.stream().filter(d -> d.getId().equals(documentId)).findFirst();
+		if(optionalDocument.isPresent()) {
+			if(documents.remove(optionalDocument.get())) {
+				try {
+					return deleteDocument(documentId).clone();
+				} catch (CloneNotSupportedException e) {
+					throw new RuntimeException(e.getCause());
+				}
+			}else {
+				throw new RuntimeException("Not able to remove the document");
+			}
+		}else {
+			throw new RuntimeException("Document not found");
 		}
 	}
 	/* --------------------------- documents actions ---------------------------*/

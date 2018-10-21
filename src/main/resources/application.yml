@@ -1,0 +1,47 @@
+mongo:
+  host: localhost
+  
+rabbit:
+  host: localhost
+  
+server:
+  port: 8080
+  
+spring:
+  main:
+    web-application-type: reactive
+
+  # MONGO
+  data:
+    mongodb:
+      #host: 192.168.99.100
+      host: ${mongo.host}
+      port: 27017
+      database: person
+
+  # BINDER RABBIT
+  rabbitmq:
+    #host: 192.168.99.100
+    host: ${rabbit.host}
+    port: 5672
+    username: guest
+    password: guest
+    
+    
+  cloud:
+    stream:
+      bindings:
+        
+        # SENDERS
+        send-person-created-event:
+          destination: person-created-event
+        
+        send-person-updated-event:
+          destination: person-updated-event
+          
+        send-person-actived-event:
+          destination: person-actived-event
+        
+        send-person-deleted-event:
+          destination: person-deleted-event
+          
