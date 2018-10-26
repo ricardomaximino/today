@@ -1,0 +1,52 @@
+# from the root
+# docker build -f docker/Dockerfile -t person:local --build-arg NAME=person --build-arg VERSION=1.0.0
+# docker run -p 8083:8080 --name Person -e SPRING_PROFILES_ACTIVE=cloud person:local
+# docker-compose -f docker/docker-compose.yml up
+
+version: '2'
+
+networks:
+  brasajava:
+    driver: bridge
+
+services:
+  # PERSON
+  person:
+    image: "ricardomaximino/reactive-person:latest"
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+      args:
+        - NAME=person
+        - VERSION=0.0.1
+    container_name: Person
+    environment:
+      - SPRING_PROFILES_ACTIVE=Local
+      - MONGO_HOST=mongo
+      - RABBIT_HOST=rabbit
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+      - rabbit
+    networks:
+      - brasajava
+      
+  # RABBIT
+  rabbit:
+    image: "rabbitmq:3-management"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    container_name: Rabbit
+    networks:
+      - brasajava
+      
+  # MONGO
+  mongo:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
+    container_name: Mongo
+    networks:
+      - brasajava
