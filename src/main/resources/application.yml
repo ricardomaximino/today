@@ -8,8 +8,10 @@ server:
   port: 8080
   
 spring:
-  main:
-    web-application-type: reactive
+
+  # APPLICATION TYPE
+#  main:
+#    web-application-type: reactive
 
   # MONGO
   data:
@@ -32,7 +34,7 @@ spring:
     stream:
       bindings:
         
-        # SENDERS
+        # SEND PERSON EVENT
         send-person-created-event:
           destination: person-created-event
         
@@ -44,4 +46,40 @@ spring:
         
         send-person-deleted-event:
           destination: person-deleted-event
+          
+        # SEND PERSONAL DOCUMENT EVENT
+        send-personalDocument-created-event:
+          destination: document-created-event
+          
+        send-personalDocument-updated-event:
+          destination: document-updated-event
+          
+        send-personalDocument-expired-event:
+          destination: document-expired-event
+          
+        send-personalDocument-cancelled-event:
+          destination: document-cancelled-event
+          
+        # SEND CONTACT EVENT
+        send-contact-created-event:
+          destination: contact-created-event
+          
+        send-contact-changed-event:
+          destination: contact-changed-event
+          
+        send-contact-availabilityChanged-event:
+          destination: contact-availability-changed-event
+          
+        send-contact-deleted-event:
+          destination: contact-deleted-event
+          
+        # SEND ADDRESS EVENT
+        send-address-created-event:
+          destination: address-created-event
+          
+        send-address-updated-event:
+          destination: address-updated-event
+          
+        send-address-deleted-event:
+          destination: address-deleted-event                         
           

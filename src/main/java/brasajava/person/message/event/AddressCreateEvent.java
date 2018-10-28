@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContactChangeAvailabilityEvent implements Event{
+public class AddressCreateEvent implements Event{
 	private String id;
 	private String personId;
-	private boolean available; 
 
 	@Override
 	public String getId() {

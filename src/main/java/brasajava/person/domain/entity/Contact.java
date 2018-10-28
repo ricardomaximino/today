@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import brasajava.person.domain.comun.Auditable;
 import brasajava.person.domain.comun.Identifiable;
-import brasajava.person.message.event.ContactChangeAvailabilityEvent;
+import brasajava.person.message.event.ContactAvailabilityChangeEvent;
 import brasajava.person.message.event.ContactChangeEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -77,7 +77,7 @@ public class Contact implements Cloneable, Auditable, Identifiable{
 	}
 	
 	protected Contact changeContactAvailability(boolean isAvailable) {
-		eventList.add(new ContactChangeAvailabilityEvent(id, person.getId(), isAvailable));
+		eventList.add(new ContactAvailabilityChangeEvent(id, person.getId(), isAvailable));
 		return this;
 	}
 }

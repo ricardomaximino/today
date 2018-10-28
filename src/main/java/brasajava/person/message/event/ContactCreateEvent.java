@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContactDeleteEvent implements Event{
+public class ContactCreateEvent implements Event{
 	private String id;
 	private String personId;
 	private Contact contact;

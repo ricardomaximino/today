@@ -5,20 +5,20 @@ import org.springframework.messaging.MessageChannel;
 
 public interface PersonalDocumentBindingChannel {
 	
-	String PERSON_CREATED_EVENT = "";
-	String PERSON_UPDATED_EVENT = "";
-	String PERSON_EXPIRED_EVENT = "";
-	String PERSON_CANCELLED_EVENT = "";
+	String PERSONAL_DOCUMENT_CREATED_EVENT = "send-personalDocument-created-event";
+	String PERSONAL_DOCUMENT_UPDATED_EVENT = "send-personalDocument-updated-event";
+	String PERSONAL_DOCUMENT_EXPIRED_EVENT = "send-personalDocument-expired-event";
+	String PERSONAL_DOCUMENT_CANCELLED_EVENT = "send-personalDocument-cancelled-event";
 
-	@Output(PERSON_CREATED_EVENT)
+	@Output(PERSONAL_DOCUMENT_CREATED_EVENT)
 	MessageChannel sendCreatedEvent();
 	
-	@Output(PERSON_UPDATED_EVENT)
+	@Output(PERSONAL_DOCUMENT_UPDATED_EVENT)
 	MessageChannel sendUpdatedEvent();
 
-	@Output(PERSON_EXPIRED_EVENT)
+	@Output(PERSONAL_DOCUMENT_EXPIRED_EVENT)
 	MessageChannel sendExpiredEvent();
 	
-	@Output(PERSON_CANCELLED_EVENT)
+	@Output(PERSONAL_DOCUMENT_CANCELLED_EVENT)
 	MessageChannel sendCancelledEvent();
 }

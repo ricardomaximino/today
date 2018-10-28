@@ -1,5 +1,6 @@
 package brasajava.person.message.event;
 
+import brasajava.person.domain.entity.PersonalDocument;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddressChangeAvailabilityEvent implements Event{
+public class PersonalDocumentCreateEvent implements Event{
 	private String id;
 	private String personId;
-	private boolean available; 
+	private PersonalDocument document;
 
 	@Override
 	public String getId() {

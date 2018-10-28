@@ -5,21 +5,16 @@ import org.springframework.messaging.MessageChannel;
 
 public interface AddressBindingChannel {
 	
-	String ADDRESS_CREATED_EVENT = "";
-	String ADDRESS_UPDATED_EVENT = "";
-	String ADDRESS_REGION_CHANGED_EVENT = "";
-	String ADDRESS_ADDRESS_CHANGED_EVENT = "";
+	String ADDRESS_CREATED_EVENT = "send-address-created-event";
+	String ADDRESS_UPDATED_EVENT = "send-address-updated-event";
+	String ADDRESS_DELETED_EVENT = "send-address-deleted-event";
 
 	@Output(ADDRESS_CREATED_EVENT)
 	MessageChannel sendCreatedEvent();
-	
-	
+
 	@Output(ADDRESS_UPDATED_EVENT)
 	MessageChannel sendUpdatedEvent();
-
-	@Output(ADDRESS_REGION_CHANGED_EVENT)
-	MessageChannel sendRegionChangedEvent();
 	
-	@Output(ADDRESS_ADDRESS_CHANGED_EVENT)
-	MessageChannel sendAddressChangedEvent();
+	@Output(ADDRESS_DELETED_EVENT)
+	MessageChannel sendDeletedEvent();
 }

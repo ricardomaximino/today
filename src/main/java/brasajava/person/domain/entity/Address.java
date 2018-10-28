@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import brasajava.person.domain.comun.Auditable;
 import brasajava.person.domain.comun.Identifiable;
-import brasajava.person.message.event.AddressChangeAvailabilityEvent;
-import brasajava.person.message.event.AddressChangeRegionEvent;
+import brasajava.person.message.event.AddressUpdateEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -50,7 +49,7 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(!this.country.equals(country)) {
 				this.country = country;
-				changeAddressRegion();
+				update();
 			}
 		}else {
 			this.country = country;
@@ -61,7 +60,7 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(!this.state.equals(state)) {
 				this.state = state;
-				changeAddressRegion();
+				update();
 			}
 		}else {
 			this.state = state;
@@ -72,7 +71,7 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(!this.city.equals(city)) {
 				this.city = city;
-				changeAddressRegion();
+				update();
 			}
 		}else {
 			this.city = city;
@@ -83,7 +82,7 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(!this.town.equals(town)) {
 				this.town = town;
-				changeAddressRegion();
+				update();
 			}
 		}else {
 			this.town = town;
@@ -94,7 +93,7 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(!this.neighborhood.equals(neighborhood)) {
 				this.neighborhood = neighborhood;
-				changeAddressRegion();
+				update();
 			}
 		}else {
 			this.neighborhood = neighborhood;
@@ -105,7 +104,7 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(this.inactive != inactive) {
 				this.inactive = inactive;
-				changeAddressAvailability(this.inactive);
+				update();
 			}
 		}else {
 			this.inactive = inactive;
@@ -116,20 +115,15 @@ public class Address implements Cloneable, Auditable, Identifiable{
 		if(person != null) {
 			if(this.cancelled != cancelled) {
 				this.cancelled = cancelled;
-				changeAddressAvailability(this.cancelled);
+				update();
 			}
 		}else {
 			this.cancelled = cancelled;
 		}
 	}
 	
-	protected Address changeAddressRegion() {
-		eventList.add(new AddressChangeRegionEvent(id, person.getId()));
-		return this;
-	}
-	
-	protected Address changeAddressAvailability(boolean isAvailable) {
-		eventList.add(new AddressChangeAvailabilityEvent(id, person.getId(), isAvailable));
+	protected Address update() {
+		eventList.add(new AddressUpdateEvent(id, person.getId()));
 		return this;
 	}
 	

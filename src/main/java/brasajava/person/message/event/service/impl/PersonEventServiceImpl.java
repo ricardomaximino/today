@@ -1,9 +1,10 @@
 
 package brasajava.person.message.event.service.impl;
 
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Component;
 
+import brasajava.person.message.channel.PersonBindingChannel;
 import brasajava.person.message.event.PersonActivateEvent;
 import brasajava.person.message.event.PersonCreateEvent;
 import brasajava.person.message.event.PersonDeleteEvent;
@@ -11,24 +12,34 @@ import brasajava.person.message.event.PersonUpdateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@EnableBinding(PersonBindingChannel.class)
 public class PersonEventServiceImpl {
 	
+	private PersonBindingChannel channels;
+
+	public PersonEventServiceImpl(PersonBindingChannel channels) {
+		this.channels = channels;
+	}
 	
 	public void sendPersonCreatedEvent(PersonCreateEvent event) {
-		log.info("Person created event recieved by PERSON QUEUE SENDER SERVICE => " + MessageBuilder.withPayload(event).build());
+		channels.sendCreatedEvent().send(MessageBuilder.withPayload(event).build());
+		log.info("Person created event recieved by PERSON QUEUE SENDER SERVICE => {}",event);
+		
 	}
 	
 	public void sendPersonUpdatedEvent(PersonUpdateEvent event) {
-		log.info("Person updated event recieved by PERSON QUEUE SENDER SERVICE => " + MessageBuilder.withPayload(event).build());
+		channels.sendUpdatedEvent().send(MessageBuilder.withPayload(event).build());
+		log.info("Person updated event recieved by PERSON QUEUE SENDER SERVICE => {}", event);
 	}
 	
 	public void sendPersonActivatedEvent(PersonActivateEvent event) {
-		log.info("Person activated event recieved by PERSON QUEUE SENDER SERVICE => " + MessageBuilder.withPayload(event).build());
+		channels.sendActivatedEvent().send(MessageBuilder.withPayload(event).build());
+		log.info("Person activated event recieved by PERSON QUEUE SENDER SERVICE => {}", event);
 	}
 	
 	public void sendPersonDeletedEvent(PersonDeleteEvent event) {
-		log.info("Person deleted event recieved by PERSON QUEUE SENDER SERVICE => " + MessageBuilder.withPayload(event).build());
+		channels.sendDeletedEvent().send(MessageBuilder.withPayload(event).build());
+		log.info("Person deleted event recieved by PERSON QUEUE SENDER SERVICE => {}", event);
 	}
 
 }

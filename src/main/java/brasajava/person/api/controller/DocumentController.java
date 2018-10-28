@@ -33,7 +33,8 @@ public class DocumentController {
 	public Mono<ResponseEntity<PersonalDocument>> create(@PathVariable String id,@RequestBody PersonalDocument document){
 		return service.findById(id)
 				.map(p -> p.addDocument(document, USER))
-				.flatMap(t -> service.update(t.getT1(), USER).map(p -> t.getT2()))
+				.flatMap(t -> service.update(t.getT1(), USER)
+				.map(p -> t.getT2()))
 				.map(ResponseEntity::ok);
 	}
 	

@@ -66,6 +66,11 @@ public class Person extends AbstractAggregateRoot<Person> implements Cloneable, 
 		
 	}
 	
+	public void setActive(Boolean active) {
+		this.active = active;
+		if(active) activatePerson();
+	}
+	
 	@Override
 	protected Person clone() throws CloneNotSupportedException {
 	 	  return Person.class.cast(super.clone());  
@@ -159,8 +164,8 @@ public class Person extends AbstractAggregateRoot<Person> implements Cloneable, 
 	
 	/* ===================================== Delete Contact =======================================*/
 	
-	private Person deleteContact(String contactId) {
-		registerEvent(new ContactDeleteEvent(contactId, id));
+	private Person deleteContact(Contact contact) {
+		registerEvent(new ContactDeleteEvent(contact.getId(), id, contact));
 		return this;
 	}
 	/* ===================================== Delete Contact =======================================*/
@@ -313,6 +318,23 @@ public class Person extends AbstractAggregateRoot<Person> implements Cloneable, 
 			throw new RuntimeException(e.getCause());
 		}
 	}
+	
+	public Person deleteContactById(String contactId, String user){
+		Optional<Contact> optionalContact = contacts.stream().filter(c -> c.getId().equals(contactId)).findFirst();
+		if(optionalContact.isPresent()) {
+			if(contacts.remove(optionalContact.get())) {
+				try {
+					return deleteContact(optionalContact.get()).clone();
+				} catch (CloneNotSupportedException e) {
+					throw new RuntimeException(e.getCause());
+				}
+			}else {
+				throw new RuntimeException("Not able to remove the contact");
+			}
+		}else {
+			throw new RuntimeException("Contact not found");
+		}
+	}
 	/* --------------------------- contacts actions ---------------------------*/
 	
 	
@@ -375,6 +397,23 @@ public class Person extends AbstractAggregateRoot<Person> implements Cloneable, 
 			}
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e.getCause());
+		}
+	}
+	
+	public Person deleteAddressById(String addressId, String user){
+		Optional<Address> optionalAddress = addresses.stream().filter(a -> a.getId().equals(addressId)).findFirst();
+		if(optionalAddress.isPresent()) {
+			if(addresses.remove(optionalAddress.get())) {
+				try {
+					return deleteAddress(addressId).clone();
+				} catch (CloneNotSupportedException e) {
+					throw new RuntimeException(e.getCause());
+				}
+			}else {
+				throw new RuntimeException("Not able to remove the address");
+			}
+		}else {
+			throw new RuntimeException("Address not found");
 		}
 	}
 	/* --------------------------- addresses actions ---------------------------*/
